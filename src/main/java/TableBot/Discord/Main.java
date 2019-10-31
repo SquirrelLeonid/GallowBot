@@ -1,4 +1,4 @@
-package GallowBot.Discord;
+package TableBot.Discord;
 
 import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.JDA;
@@ -14,9 +14,9 @@ public class Main
     public static void main (String[] args) throws LoginException
     {
         BasicConfigurator.configure();
-        JDA jda = new JDABuilder(AccountType.BOT).setToken("NjM2MTc4MTkzMDE5MzA1OTk1.Xa8a1w.qu4VLVKJfm4RQvRjN9Czv4CFltw").build();
+        JDA jda = new JDABuilder(AccountType.BOT).setToken("").build();
         jda.getPresence().setStatus(OnlineStatus.ONLINE);
-        jda.getPresence().setActivity(Activity.listening("/help"));
+        jda.getPresence().setActivity(Activity.listening("-help"));
         jda.addEventListener(new CommandHandler());
     }
 }
