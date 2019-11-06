@@ -1,20 +1,20 @@
 package TableBot.Discord;
 
-import TableBot.Games.GameModels;
+import TableBot.Games.Activity;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-public class ActivityKeeper
+public class ActivitiesKeeper
 {
-    private HashMap<String, GameModels> Activities;
+    private HashMap<String, Activity> Activities;
 
-    public ActivityKeeper ()
+    public ActivitiesKeeper ()
     {
         Activities = new HashMap<>();
     }
 
-    public void addActivity (String username, GameModels game)
+    public void addActivity (String username, Activity game)
     {
         Activities.put(username, game);
     }
@@ -29,6 +29,11 @@ public class ActivityKeeper
         return Activities.containsKey(username);
     }
 
+    public Activity getActivity(String username)
+    {
+        return Activities.get(username);
+    }
+
     public String showActivities()
     {
         return convertToString();
@@ -38,7 +43,7 @@ public class ActivityKeeper
     private String convertToString()
     {
         StringBuilder activities = new StringBuilder();
-        for (Map.Entry<String, GameModels> entry: Activities.entrySet())
+        for (Map.Entry<String, Activity> entry: Activities.entrySet())
         {
             activities.append(entry.getKey());
             activities.append(" plays the ");
@@ -48,7 +53,4 @@ public class ActivityKeeper
 
         return  activities.length() == 0 ? "There are no active actions" : activities.toString();
     }
-
-
-
 }

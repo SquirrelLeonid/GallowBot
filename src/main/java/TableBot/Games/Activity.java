@@ -3,13 +3,13 @@ package TableBot.Games;
 import TableBot.Games.Gallows.GallowsModel;
 import TableBot.Games.Cards.CardgameModel;
 
-public class GameModels
+public class Activity
 {
-    private GallowsModel gallowsModel;
-    private CardgameModel cardgameModel;
+    public GallowsModel gallowsModel;
+    public CardgameModel cardgameModel;
     private String gameName;
 
-    public GameModels (Object model)
+    public Activity (Object model)
     {
         if (model instanceof GallowsModel)
         {
