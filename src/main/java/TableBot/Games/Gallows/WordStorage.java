@@ -1,5 +1,7 @@
 package TableBot.Games.Gallows;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class WordStorage
@@ -27,19 +29,22 @@ public class WordStorage
         return new String(openedWord);
     }
 
-    public void getUsedLetters()
+    public char[] getUsedLetters()
     {
-        //TODO return list of used letters.
+        char[] result = new char[usedLetters.size()];
+        for (int i = 0; i < result.length; i++)
+            result[i] = usedLetters.get(i);
+        return result;
     }
 
     public void openLetters(char letter)
     {
         for (int i = 0; i < length; i++)
-            if (hiddenWord[i] == letter)
+            if (letter == hiddenWord[i])
                 openedWord[i] = letter;
     }
 
-    public boolean isOpenedWord()
+    public boolean isOpened()
     {
         for (int i = 0; i < length; i++)
         {
@@ -49,11 +54,20 @@ public class WordStorage
         return true;
     }
 
-    public void hasLetter(char letter)
+    public boolean wordHasLetter(char letter)
     {
-        //TODO check for letter in hidden word
+        if (usedLetters.contains(letter))
+            return false;
+        usedLetters.add(letter);
+        for (char element: hiddenWord)
+        {
+            if (letter == element)
+                return true;
+        }
+        return false;
     }
 
+    @NotNull
     private char[] createOpenedWord()
     {
         StringBuilder builder = new StringBuilder(length);

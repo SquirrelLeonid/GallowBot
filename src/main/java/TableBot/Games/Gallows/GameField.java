@@ -19,13 +19,13 @@ public class GameField
     public GameField ()
     {
         setFont();
-        updateImage(nextImgIndex); //statement will get first image from images list
+        updateImage(); //statement will get first image from images list
     }
 
     //called when the user made a mistake.
-    public void updateImage(int index)
+    public void updateImage()
     {
-        statement = ImagesKeeper.getImageByIndex(index);
+        statement = ImagesKeeper.getImageByIndex(nextImgIndex);
         assert statement != null;
         graphics = statement.createGraphics();
         graphics.setFont(font);
@@ -40,18 +40,34 @@ public class GameField
         String underline = getUnderline(formattedWord);
         int x = 20; int y = 340;
         graphics.setColor(Color.WHITE);
-        graphics.fillRect(11,304,618,165);
+        graphics.fillRect(11,304,618,35);
         graphics.setColor(Color.BLACK);
         graphics.drawString(formattedWord, x, y);
-        graphics.drawString(underline, x,y+5);
+        //graphics.drawString(underline, x,y+5);
     }
 
+    public void drawWinMessage()
+    {
+        graphics.setColor(Color.BLACK);
+        graphics.drawString("You win! Perfect!", 100, 400);
+    }
+
+    public void drawHiddenWord(String word)
+    {
+        String formattedWord = formatWord(word);
+        String underline = getUnderline(formattedWord);
+        int x = 20; int y = 370;
+        graphics.setColor(Color.BLACK);
+        graphics.drawString(formattedWord, x,y);
+        //graphics.drawString(underline, x, y + 5);
+    }
     //called after any change
     public void drawUsedLetters(@NotNull char[] usedLetters)
     {
         //A top right part of image
-        graphics.setColor(Color.WHITE);
+        graphics.setColor(Color.white);
         graphics.fillRect(262,11,366,286);
+        graphics.setColor(Color.black);
         int x = 272;
         int y = 41;
         for (int i = 0; i < usedLetters.length; i++)
