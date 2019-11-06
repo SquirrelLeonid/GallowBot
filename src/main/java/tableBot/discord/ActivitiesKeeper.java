@@ -1,6 +1,6 @@
-package TableBot.Discord;
+package tableBot.discord;
 
-import TableBot.Games.Activity;
+import tableBot.games.Activity;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;

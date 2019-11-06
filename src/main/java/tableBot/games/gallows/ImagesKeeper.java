@@ -1,6 +1,6 @@
-package TableBot.Games.Gallows;
+package tableBot.games.gallows;
 
-import TableBot.PathGetter;
+import tableBot.PathGetter;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

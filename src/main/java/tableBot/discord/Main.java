@@ -1,4 +1,4 @@
-package TableBot.Discord;
+package tableBot.discord;
 
 import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.JDA;
@@ -14,7 +14,7 @@ public class Main
     public static void main (String[] args) throws LoginException
     {
         BasicConfigurator.configure();
-        JDA jda = new JDABuilder(AccountType.BOT).setToken("NjM2MTc4MTkzMDE5MzA1OTk1.XbBq2w.BTncAafLUnZSiCldqI0zv9OxB10").build();
+        JDA jda = new JDABuilder(AccountType.BOT).setToken("NjM2MTc4MTkzMDE5MzA1OTk1.XcMmAQ.E3hQTCfLkAAWCUD5REaj0d1LOOU").build();
         jda.getPresence().setStatus(OnlineStatus.ONLINE);
         jda.getPresence().setActivity(Activity.listening("-help"));
         jda.addEventListener(new CommandHandler());

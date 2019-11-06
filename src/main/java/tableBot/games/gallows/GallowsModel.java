@@ -1,4 +1,4 @@
-package TableBot.Games.Gallows;
+package tableBot.games.gallows;
 
 public class GallowsModel
 {

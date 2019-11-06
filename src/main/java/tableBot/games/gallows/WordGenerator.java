@@ -1,8 +1,8 @@
-package TableBot.Games.Gallows;
+package tableBot.games.gallows;
 
 import java.io.*;
 import java.util.*;
-import TableBot.PathGetter;
+import tableBot.PathGetter;
 
 public class WordGenerator
 {

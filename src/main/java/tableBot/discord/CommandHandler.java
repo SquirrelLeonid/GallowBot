@@ -1,11 +1,10 @@
-package TableBot.Discord;
+package tableBot.discord;
 
-import TableBot.Games.*;
-import TableBot.Games.Cards.CardgameModel;
-import TableBot.Games.Gallows.GallowsModel;
+import tableBot.games.*;
+import tableBot.games.cards.CardgameModel;
+import tableBot.games.gallows.GallowsModel;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.api.utils.AttachmentOption;
 
 
 public class CommandHandler extends ListenerAdapter

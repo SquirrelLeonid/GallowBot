@@ -1,4 +1,4 @@
-package TableBot;
+package tableBot;
 
 import java.io.File;
 

@@ -1,7 +1,7 @@
-package TableBot.Games;
+package tableBot.games;
 
-import TableBot.Games.Gallows.GallowsModel;
-import TableBot.Games.Cards.CardgameModel;
+import tableBot.games.gallows.GallowsModel;
+import tableBot.games.cards.CardgameModel;
 
 public class Activity
 {

@@ -1,4 +1,4 @@
-package TableBot.Games.Cards;
+package tableBot.games.cards;
 
 public class CardgameModel
 {
