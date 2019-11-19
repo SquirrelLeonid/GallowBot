@@ -1,4 +1,4 @@
-package TableBot.Games.Gallows;
+package tableBot.games.gallows;
 
 public class GallowsModel
 {
@@ -6,17 +6,17 @@ public class GallowsModel
     private boolean isEnded = false;
 
     public GameField gameField;
-    public WordStorage wordStorage;
+    private WordStorage wordStorage;
 
-    public GallowsModel()
+    public GallowsModel ()
     {
         //Creation is correct
         wordStorage = new WordStorage();
-        gameField = new GameField();
+        gameField = new GameField(wordStorage.getUsedLetters());
         gameField.drawOpenedLetters(wordStorage.getOpenedWord());
     }
 
-    public void makeMove(char letter)
+    public void makeMove (char letter)
     {
         if (wordStorage.wordHasLetter(letter))
         {
@@ -41,12 +41,12 @@ public class GallowsModel
         gameField.drawUsedLetters(wordStorage.getUsedLetters());
     }
 
-    public boolean isGameEnded()
+    public boolean isGameEnded ()
     {
         return isEnded;
     }
 
-    public int getLives()
+    public int getLives ()
     {
         return lives;
     }

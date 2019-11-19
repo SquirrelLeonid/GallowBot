@@ -1,4 +1,4 @@
-package TableBot.Games.Gallows;
+package tableBot.games.gallows;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -11,7 +11,7 @@ public class WordStorage
     private char[] openedWord;
     private ArrayList<Character> usedLetters;
 
-    public WordStorage()
+    public WordStorage ()
     {
         usedLetters = new ArrayList<>();
         hiddenWord = WordGenerator.getWord().toCharArray();
@@ -19,17 +19,17 @@ public class WordStorage
         openedWord = createOpenedWord();
     }
 
-    public String getHiddenWord()
+    public String getHiddenWord ()
     {
         return new String(hiddenWord);
     }
 
-    public String getOpenedWord()
+    public String getOpenedWord ()
     {
         return new String(openedWord);
     }
 
-    public char[] getUsedLetters()
+    public char[] getUsedLetters ()
     {
         char[] result = new char[usedLetters.size()];
         for (int i = 0; i < result.length; i++)
@@ -37,14 +37,14 @@ public class WordStorage
         return result;
     }
 
-    public void openLetters(char letter)
+    public void openLetters (char letter)
     {
         for (int i = 0; i < length; i++)
             if (letter == hiddenWord[i])
                 openedWord[i] = letter;
     }
 
-    public boolean isOpened()
+    public boolean isOpened ()
     {
         for (int i = 0; i < length; i++)
         {
@@ -54,12 +54,12 @@ public class WordStorage
         return true;
     }
 
-    public boolean wordHasLetter(char letter)
+    public boolean wordHasLetter (char letter)
     {
         if (usedLetters.contains(letter))
             return false;
         usedLetters.add(letter);
-        for (char element: hiddenWord)
+        for (char element : hiddenWord)
         {
             if (letter == element)
                 return true;
@@ -68,10 +68,12 @@ public class WordStorage
     }
 
     @NotNull
-    private char[] createOpenedWord()
+    private char[] createOpenedWord ()
     {
         StringBuilder builder = new StringBuilder(length);
-        for (int i = 0; i < length; i++)
+        builder.append(hiddenWord[0]);
+        usedLetters.add(hiddenWord[0]);
+        for (int i = 0; i < length - 1; i++)
             builder.append('?');
         return builder.toString().toCharArray();
     }
