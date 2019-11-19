@@ -1,5 +1,7 @@
 package tableBot.discord;
 
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.TextChannel;
 import org.jetbrains.annotations.NotNull;
 
 import tableBot.InfoGetter;
@@ -17,29 +19,33 @@ public class CommandHandler extends ListenerAdapter
 
     public void onGuildMessageReceived (GuildMessageReceivedEvent event)
     {
-        String[] message = event.getMessage().getContentRaw().split("\\s+");
-        switch (message[0].toLowerCase())
-        {
-            case (prefix + "help"):
-                event.getChannel().sendMessage("I do nothing").queue();
-                break;
-            case (prefix + "gallows"):
-                gallowsHandler.handleCommand(event, message);
-                break;
-            case (prefix + "twenty-one"):
-                cardGameHandler.handleCommand(event, message);
-                break;
-            case (prefix + "activities"):
-                event.getChannel().sendMessage(InfoGetter.showActivities()).queue();
-                break;
-            default:
-                break;
-        }
+        handleCommand(event.getChannel(), event.getMessage(), event.getAuthor().getAsTag());
     }
 
     public void onGuildMessageUpdate (@NotNull GuildMessageUpdateEvent event)
     {
-        GuildMessageReceivedEvent e = new GuildMessageReceivedEvent(event.getJDA(), event.getResponseNumber(), event.getMessage());
-        onGuildMessageReceived(e);
+        handleCommand(event.getChannel(), event.getMessage(), event.getAuthor().getAsTag());
+    }
+
+    private void handleCommand (TextChannel channel, Message message, String userTag)
+    {
+        String[] command = message.getContentRaw().split("\\s+");
+        switch (command[0].toLowerCase())
+        {
+            case (prefix + "help"):
+                channel.sendMessage("I do nothing").queue();
+                break;
+            case (prefix + "gallows"):
+                gallowsHandler.handleCommand(channel, command, userTag);
+                break;
+            case (prefix + "twenty-one"):
+                cardGameHandler.handleCommand(channel, command, userTag);
+                break;
+            case (prefix + "activities"):
+                channel.sendMessage(InfoGetter.showActivities()).queue();
+                break;
+            default:
+                break;
+        }
     }
 }

@@ -1,5 +1,7 @@
 package tableBot.handlers;
 
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 import tableBot.InfoGetter;
@@ -19,9 +21,8 @@ public class GallowsHandler implements ActivityKeeper, Handler
         activityLog = new HashMap<>();
     }
 
-    public void handleCommand (@NotNull GuildMessageReceivedEvent event, @NotNull String[] command)
+    public void handleCommand (TextChannel channel, String[] command, String userTag)
     {
-        String userTag = event.getAuthor().getAsTag();
         switch (command[1].toLowerCase())
         {
             case ("start"):
@@ -30,10 +31,10 @@ public class GallowsHandler implements ActivityKeeper, Handler
                 {
                     addActivity(userTag);
                     byte[] image = activityLog.get(getPlayer(userTag)).gameField.getImage();
-                    event.getChannel().sendFile(image, "start.jpg").queue();
+                    channel.sendFile(image, "start.jpg").queue();
                 }
                 else
-                    event.getChannel().sendMessage(String.format("%s, you have unfinished game. To stop it write '-gallows stop'", userTag)).queue();
+                    channel.sendMessage(String.format("%s, you have unfinished game. To stop it write '-gallows stop'", userTag)).queue();
                 break;
             }
             case ("letter"):
@@ -45,15 +46,15 @@ public class GallowsHandler implements ActivityKeeper, Handler
                         GallowsModel gallowsModel = activityLog.get(getPlayer(userTag));
                         gallowsModel.makeMove(command[2].charAt(0));
                         byte[] image = gallowsModel.gameField.getImage();
-                        event.getChannel().sendFile(image, "nextMove.jpg").queue();
+                        channel.sendFile(image, "nextMove.jpg").queue();
                         if (gallowsModel.isGameEnded())
                             deleteActivity(userTag);
                     }
                     else
-                        event.getChannel().sendMessage("For guess a letter use command '-gallows letter <letter>'").queue();
+                        channel.sendMessage("For guess a letter use command '-gallows letter <letter>'").queue();
                 }
                 else
-                    event.getChannel().sendMessage(String.format("%s, you don't have a created gallows game.", userTag)).queue();
+                    channel.sendMessage(String.format("%s, you don't have a created gallows game.", userTag)).queue();
                 break;
             }
             case ("help"):
@@ -63,9 +64,9 @@ public class GallowsHandler implements ActivityKeeper, Handler
             }
             case ("stop"):
                 if (deleteActivity(userTag))
-                    event.getChannel().sendMessage(String.format("%s, your game was stopped.", userTag)).queue();
+                    channel.sendMessage(String.format("%s, your game was stopped.", userTag)).queue();
                 else
-                    event.getChannel().sendMessage(String.format("%s, you don't have a created gallows game.", userTag)).queue();
+                    channel.sendMessage(String.format("%s, you don't have a created gallows game.", userTag)).queue();
                 break;
             default:
                 break;

@@ -1,13 +1,14 @@
 package tableBot.handlers;
 
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 public interface Handler
 {
-    default void handleCommand (GuildMessageReceivedEvent event, String[] message)
+    default void handleCommand (TextChannel channel, String[] command, String userTag)
     {
-        String userTag = event.getAuthor().getAsTag();
-        switch (message[1].toLowerCase())
+        switch (command[1].toLowerCase())
         {
             case ("start"):
                 //TODO: create a game
