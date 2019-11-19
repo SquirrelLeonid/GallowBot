@@ -10,7 +10,6 @@ public class GallowsModel
 
     public GallowsModel ()
     {
-        //Creation is correct
         wordStorage = new WordStorage();
         gameField = new GameField(wordStorage.getUsedLetters());
         gameField.drawOpenedLetters(wordStorage.getOpenedWord());
