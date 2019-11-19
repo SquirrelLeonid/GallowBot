@@ -11,7 +11,7 @@ public class ImagesKeeper
 {
     private static File[] images = null;
 
-    public static BufferedImage getImageByIndex(int index)
+    public static BufferedImage getImageByIndex (int index)
     {
         if (images == null || images.length == 0)
         {
@@ -28,8 +28,7 @@ public class ImagesKeeper
         catch (ArrayIndexOutOfBoundsException exception)
         {
             return null;
-        }
-        catch (IOException exception)
+        } catch (IOException exception)
         {
             return null;
         }

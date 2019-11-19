@@ -16,16 +16,17 @@ public class GameField
     private BufferedImage statement;
     private int nextImgIndex;
 
-    public GameField ()
+    public GameField (char[] usedLetters)
     {
         setFont();
-        updateImage(nextImgIndex); //statement will get first image from images list
+        updateImage(); //statement will get first image from images list
+        drawUsedLetters(usedLetters);
     }
 
     //called when the user made a mistake.
-    public void updateImage(int index)
+    public void updateImage ()
     {
-        statement = ImagesKeeper.getImageByIndex(index);
+        statement = ImagesKeeper.getImageByIndex(nextImgIndex);
         assert statement != null;
         graphics = statement.createGraphics();
         graphics.setFont(font);
@@ -33,25 +34,44 @@ public class GameField
     }
 
     //called when the user has guessed a letter.
-    public void drawOpenedLetters(String word)
+    public void drawOpenedLetters (String word)
     {
         //A Bottom rectangle of image
         String formattedWord = formatWord(word);
         String underline = getUnderline(formattedWord);
-        int x = 20; int y = 340;
+        int x = 20;
+        int y = 340;
         graphics.setColor(Color.WHITE);
-        graphics.fillRect(11,304,618,165);
+        graphics.fillRect(11, 304, 618, 35);
         graphics.setColor(Color.BLACK);
         graphics.drawString(formattedWord, x, y);
-        graphics.drawString(underline, x,y+5);
+        graphics.drawString(underline, x, y + 5);
+    }
+
+    public void drawWinMessage ()
+    {
+        graphics.setColor(Color.BLACK);
+        graphics.drawString("You win! Perfect!", 100, 400);
+    }
+
+    public void drawHiddenWord (String word)
+    {
+        String formattedWord = formatWord(word);
+        String underline = getUnderline(formattedWord);
+        int x = 20;
+        int y = 410;
+        graphics.setColor(Color.BLACK);
+        graphics.drawString(formattedWord, x, y);
+        graphics.drawString(underline, x, y + 5);
     }
 
     //called after any change
-    public void drawUsedLetters(@NotNull char[] usedLetters)
+    public void drawUsedLetters (@NotNull char[] usedLetters)
     {
         //A top right part of image
-        graphics.setColor(Color.WHITE);
-        graphics.fillRect(262,11,366,286);
+        graphics.setColor(Color.white);
+        graphics.fillRect(262, 11, 366, 286);
+        graphics.setColor(Color.black);
         int x = 272;
         int y = 41;
         for (int i = 0; i < usedLetters.length; i++)
@@ -61,26 +81,25 @@ public class GameField
                 x = 272;
                 y += 30;
             }
-            graphics.drawChars(usedLetters, i,1,x,y);
-            x+=30;
+            graphics.drawChars(usedLetters, i, 1, x, y);
+            x += 30;
         }
     }
 
-    public byte[] getImage()
+    public byte[] getImage ()
     {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         try
         {
             ImageIO.write(statement, "jpg", output);
             return output.toByteArray();
-        }
-        catch (IOException exception)
+        } catch (IOException exception)
         {
             return null;
         }
     }
 
-    private String getUnderline(String word)
+    private String getUnderline (String word)
     {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < word.length(); i++)
@@ -93,15 +112,16 @@ public class GameField
         return builder.toString();
     }
 
-    private String formatWord(String word)
+    private String formatWord (String word)
     {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < word.length(); i++)
             builder.append(word.charAt(i) + " ");
         return builder.toString().trim();
     }
-    private void setFont()
+
+    private void setFont ()
     {
-        font = new Font("serif", Font.BOLD, 30);
+        font = new Font("monospaced", Font.BOLD, 30);
     }
 }
