@@ -95,7 +95,7 @@ public class GallowsHandler implements ActivityKeeper, Handler
             if (entry.getKey().getPlayerTag().compareTo(userTag) == 0)
             {
                 activityLog.remove(entry.getKey());
-                InfoGetter.removeRecord(userTag);
+                InfoGetter.removeRecord(userTag, "gallows");
                 return true;
             }
         }

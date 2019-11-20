@@ -22,7 +22,7 @@ public class CommandHandler extends ListenerAdapter
         handleCommand(event.getChannel(), event.getMessage(), event.getAuthor().getAsTag());
     }
 
-    public void onGuildMessageUpdate (@NotNull GuildMessageUpdateEvent event)
+    public void onGuildMessageUpdate (GuildMessageUpdateEvent event)
     {
         handleCommand(event.getChannel(), event.getMessage(), event.getAuthor().getAsTag());
     }
@@ -38,10 +38,10 @@ public class CommandHandler extends ListenerAdapter
             case (prefix + "gallows"):
                 gallowsHandler.handleCommand(channel, command, userTag);
                 break;
-            case (prefix + "twenty-one"):
+            case (prefix + "cards"):
                 cardGameHandler.handleCommand(channel, command, userTag);
                 break;
-            case (prefix + "activities"):
+            case (prefix + "activity"):
                 channel.sendMessage(InfoGetter.showActivities()).queue();
                 break;
             default:

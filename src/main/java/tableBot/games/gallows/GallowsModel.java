@@ -44,10 +44,4 @@ public class GallowsModel
     {
         return isEnded;
     }
-
-    public int getLives ()
-    {
-        return lives;
-    }
-
 }

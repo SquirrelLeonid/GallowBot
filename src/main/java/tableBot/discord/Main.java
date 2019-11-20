@@ -14,7 +14,7 @@ public class Main
     public static void main (String[] args) throws LoginException
     {
         BasicConfigurator.configure();
-        JDA jda = new JDABuilder(AccountType.BOT).setToken("NjM2MTc4MTkzMDE5MzA1OTk1.XdRQHQ.nhTpINa4iEty-TLr6BNcCU3gr6Y").build();
+        JDA jda = new JDABuilder(AccountType.BOT).setToken("NjM2MTc4MTkzMDE5MzA1OTk1.XdUPWA.uk16zZJqueO3rYMOJn-F9NXinEA").build();
         jda.getPresence().setStatus(OnlineStatus.ONLINE);
         jda.getPresence().setActivity(Activity.listening("-help"));
         jda.addEventListener(new CommandHandler());
