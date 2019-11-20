@@ -2,46 +2,40 @@ package tableBot;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class InfoGetter
 {
-    //Unsorted records
-    private static HashMap<String, String> activities = new HashMap<>();
+    //Game => players tags;
+    private static HashMap<String, ArrayList<String>> activities = new HashMap<>();
 
     public static void addRecord (String userTag, String gameName)
     {
-        activities.put(userTag, gameName);
+        if (! activities.containsKey(gameName))
+            activities.put(gameName, new ArrayList<>());
+        activities.get(gameName).add(userTag);
     }
 
-    public static void removeRecord (String userTag)
+    public static void removeRecord (String userTag, String gameName)
     {
-        activities.remove(userTag);
+        ArrayList<String> players = activities.get(gameName);
+        players.removeIf(element -> element.compareTo(userTag) == 0);
+        if (players.size() == 0)
+            activities.remove(gameName);
     }
 
     @NotNull
     public static String showActivities ()
     {
         StringBuilder builder = new StringBuilder();
-        for (Map.Entry<String, String> entry : activities.entrySet())
+        for (Map.Entry<String, ArrayList<String>> entry : activities.entrySet())
         {
-            builder.append(getUserTag(entry));
-            builder.append(" plays ");
-            builder.append(getGameName(entry));
-            builder.append("\n");//Возможно \n\r
+            builder.append(String.format("playing the %s:\n", entry.getKey()));
+            entry.getValue().forEach(userTag -> builder.append(userTag).append("\n"));
+            builder.append("------------------------\n");
         }
         return builder.length() == 0 ? "There is no activity." : builder.toString().trim();
     }
-
-    private static String getUserTag (@NotNull Map.Entry<String, String> entry)
-    {
-        return entry.getKey();
-    }
-
-    private static String getGameName (@NotNull Map.Entry<String, String> entry)
-    {
-        return entry.getValue();
-    }
-
 }
