@@ -1,4 +1,6 @@
-Hello, I'm Gallowbot. Everything I know how to do is described here.
-+ All commands are starting with --
+Hello, I'm TableBot. Everything I know how to do is described here.
+All commands start with '-'
 
---help (Show help)
+-help [Show this message]
+-gallows help [Show help for game gallows.]
+-cards help [Show help for card game]

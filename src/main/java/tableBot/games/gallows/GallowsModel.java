@@ -20,23 +20,26 @@ public class GallowsModel
         if (wordStorage.wordHasLetter(letter))
         {
             wordStorage.openLetters(letter);
-            if (wordStorage.isOpened())
-            {
-                isEnded = true;
-                gameField.drawWinMessage();
-            }
         }
         else
         {
             gameField.updateImage();
+            wordStorage.openLetters(letter);
             lives--;
-            if (lives == 0)
-            {
-                gameField.drawHiddenWord(wordStorage.getHiddenWord());
-                isEnded = true;
-            }
         }
+
         gameField.drawOpenedLetters(wordStorage.getOpenedWord());
+
+        if (wordStorage.isOpened())
+        {
+            isEnded = true;
+            gameField.drawWinMessage();
+        }
+        if (lives == 0)
+        {
+            isEnded = true;
+            gameField.drawHiddenWord((wordStorage.getHiddenWord()));
+        }
         gameField.drawUsedLetters(wordStorage.getUsedLetters());
     }
 

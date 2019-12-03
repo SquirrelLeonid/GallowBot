@@ -10,12 +10,12 @@ import java.io.IOException;
 public class ImagesKeeper
 {
     private static File[] images = null;
+    private static File bottomFill = new File(PathGetter.getImageFolder() + "\\Gallows\\y_BottomFill.jpg");
 
     public static BufferedImage getImageByIndex (int index)
     {
         if (images == null || images.length == 0)
         {
-            //Pay attention to relative path
             File folder = new File(PathGetter.getImageFolder() + File.separator + "Gallows");
             images = folder.listFiles();
         }
@@ -24,13 +24,26 @@ public class ImagesKeeper
             assert images != null;
             return ImageIO.read(images[index]);
         }
-        //TODO return an error image or handle null value in other methods
         catch (ArrayIndexOutOfBoundsException exception)
         {
             return null;
-        } catch (IOException exception)
+        }
+        catch (IOException exception)
         {
             return null;
         }
+    }
+
+    public static BufferedImage getBottomFill ()
+    {
+        try
+        {
+            return ImageIO.read(bottomFill);
+        }
+        catch (IOException exception)
+        {
+            return null;
+        }
+
     }
 }
