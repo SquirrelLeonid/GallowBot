@@ -3,13 +3,13 @@ package tableBot.games.gallows;
 import org.jetbrains.annotations.NotNull;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-//Only non-static, because each player has him own field
-public class GameField
+public class GameField extends JPanel
 {
     private Font font;
     private Graphics2D graphics;
@@ -19,11 +19,10 @@ public class GameField
     public GameField (char[] usedLetters)
     {
         setFont();
-        updateImage(); //statement will get first image from images list
+        updateImage();
         drawUsedLetters(usedLetters);
     }
 
-    //called when the user made a mistake.
     public void updateImage ()
     {
         statement = ImagesKeeper.getImageByIndex(nextImgIndex);
@@ -33,16 +32,13 @@ public class GameField
         nextImgIndex++;
     }
 
-    //called when the user has guessed a letter.
     public void drawOpenedLetters (String word)
     {
-        //A Bottom rectangle of image
         String formattedWord = formatWord(word);
         String underline = getUnderline(formattedWord);
-        int x = 20;
-        int y = 340;
-        graphics.setColor(Color.WHITE);
-        graphics.fillRect(11, 304, 618, 35);
+        int x = 5;
+        int y = 295;
+        graphics.drawImage(ImagesKeeper.getBottomFill(), 0, 270, this);
         graphics.setColor(Color.BLACK);
         graphics.drawString(formattedWord, x, y);
         graphics.drawString(underline, x, y + 5);
@@ -58,19 +54,15 @@ public class GameField
     {
         String formattedWord = formatWord(word);
         String underline = getUnderline(formattedWord);
-        int x = 20;
-        int y = 410;
+        int x = 5;
+        int y = 375;
         graphics.setColor(Color.BLACK);
         graphics.drawString(formattedWord, x, y);
         graphics.drawString(underline, x, y + 5);
     }
 
-    //called after any change
     public void drawUsedLetters (@NotNull char[] usedLetters)
     {
-        //A top right part of image
-        graphics.setColor(Color.white);
-        graphics.fillRect(262, 11, 366, 286);
         graphics.setColor(Color.black);
         int x = 272;
         int y = 41;
@@ -122,6 +114,6 @@ public class GameField
 
     private void setFont ()
     {
-        font = new Font("monospaced", Font.BOLD, 30);
+        font = new Font("Monospaced", Font.BOLD, 30);
     }
 }
