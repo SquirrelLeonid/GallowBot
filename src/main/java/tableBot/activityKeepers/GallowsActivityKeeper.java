@@ -53,16 +53,4 @@ public class GallowsActivityKeeper implements ActivityKeeper
         }
         return false;
     }
-
-    @Override
-    public User getUser (String userTag)
-    {
-        for (Map.Entry<User, GallowsModel> entry : activityLog.entrySet())
-        {
-            if (entry.getKey().getAsTag().compareTo(userTag) == 0)
-                return entry.getKey();
-        }
-
-        return null;
-    }
 }

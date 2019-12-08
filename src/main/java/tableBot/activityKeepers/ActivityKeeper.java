@@ -9,6 +9,4 @@ public interface ActivityKeeper
     boolean deleteActivity (User user);
 
     boolean logContains (User user);
-
-    User getUser (String userTag);
 }

@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.entities.User;
 import org.jetbrains.annotations.NotNull;
 
 import tableBot.InfoGetter;
+import tableBot.PathGetter;
 import tableBot.handlers.GallowsHandler;
 import tableBot.handlers.CardGameHandler;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -34,7 +35,8 @@ public class CommandHandler extends ListenerAdapter
         switch (command[0].toLowerCase())
         {
             case (prefix + "help"):
-                channel.sendMessage("I do nothing").queue();
+                String path = PathGetter.getTextFolder() + "Help.txt";
+                InfoGetter.showHelp(channel, path);
                 break;
             case (prefix + "gallows"):
                 gallowsHandler.handleCommand(channel, command, user);
