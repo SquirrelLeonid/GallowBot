@@ -1,0 +1,9 @@
+Here is help for gallows game.
+___|Rules|___
+-You have 10 lives. By other words you can make a miss only 9 times, 10 will be a lose.
+-If you guessed a right letter, then all the same letters will be opened in a word.
+___|Commands|___
+-gallows start [start a new game]
+-gallows letter <letter> [try to guess a letter]
+-gallows stop [Stop this game. Progress won't be saved]
+-gallows help [Show this message]

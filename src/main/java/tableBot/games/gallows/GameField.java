@@ -65,7 +65,7 @@ public class GameField extends JPanel
     {
         graphics.setColor(Color.black);
         int x = 272;
-        int y = 41;
+        int y = 25;
         for (int i = 0; i < usedLetters.length; i++)
         {
             if (i % 6 == 0)

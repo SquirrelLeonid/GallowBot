@@ -1,8 +1,12 @@
 package tableBot;
 
+import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,5 +42,18 @@ public class InfoGetter
             builder.append("------------------------\n");
         }
         return builder.length() == 0 ? "There is no activity." : builder.toString().trim();
+    }
+
+    public static void showHelp (@NotNull TextChannel channel, String path)
+    {
+        try
+        {
+            byte[] content = Files.readAllBytes(Paths.get(path));
+            channel.sendMessage(new String(content)).queue();
+        }
+        catch (IOException exception)
+        {
+            channel.sendMessage(Constants.FILE_DOES_NOT_EXIST).queue();
+        }
     }
 }
