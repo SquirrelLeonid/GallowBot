@@ -3,6 +3,7 @@ package tableBot.handlers;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import org.jetbrains.annotations.NotNull;
+import tableBot.Constants;
 import tableBot.InfoGetter;
 import tableBot.PathGetter;
 import tableBot.activityKeepers.GallowsActivityKeeper;
@@ -20,35 +21,45 @@ public class GallowsHandler implements Handler
     public void handleCommand (TextChannel channel, String[] command, User user)
     {
         String userTag = user.getAsTag();
-        switch (command[1].toLowerCase())
+        if (! checkCommand(command))
+            channel.sendMessage(String.format(Constants.WRONG_ARGUMENTS_NUMBER, "gallows")).queue();
+        else
         {
-            case ("start"):
+            switch (command[1].toLowerCase())
             {
-                start(channel, user);
-                break;
+                case ("start"):
+                {
+                    start(channel, user);
+                    break;
+                }
+                case ("letter"):
+                {
+                    if (command.length != 3)
+                        channel.sendMessage(String.format(Constants.WRONG_ARGUMENTS_NUMBER, "gallows")).queue();
+                    else if (! activityKeeper.logContains(user))
+                        channel.sendMessage(String.format("%s, you don't have a created gallows game.", userTag)).queue();
+                    else if (! isLetter(command[2]))
+                        channel.sendMessage((String.format(Constants.WRONG_ARGUMENTS_FORMAT, "gallows"))).queue();
+                    else
+                        tryGuess(channel, user, command[2].charAt(0));
+                    break;
+                }
+                case ("help"):
+                {
+                    String path = PathGetter.getTextFolder() + "GallowsHelp.txt";
+                    InfoGetter.showHelp(channel, path);
+                    break;
+                }
+                case ("stop"):
+                    if (activityKeeper.deleteActivity(user))
+                        channel.sendMessage(String.format("%s, your game was stopped.", userTag)).queue();
+                    else
+                        channel.sendMessage(String.format("%s, you don't have a created gallows game.", userTag)).queue();
+                    break;
+                default:
+                    channel.sendMessage(Constants.UNKNOWN_COMMAND).queue();
+                    break;
             }
-            case ("letter"):
-            {
-                if (checkCommand(command))
-                    tryGuess(channel, user, command[2].charAt(0));
-                else
-                    channel.sendMessage("For guess a letter use command '-gallows letter <letter>'").queue();
-                break;
-            }
-            case ("help"):
-            {
-                String path = PathGetter.getTextFolder() + "GallowsHelp.txt";
-                InfoGetter.showHelp(channel, path);
-                break;
-            }
-            case ("stop"):
-                if (activityKeeper.deleteActivity(user))
-                    channel.sendMessage(String.format("%s, your game was stopped.", userTag)).queue();
-                else
-                    channel.sendMessage(String.format("%s, you don't have a created gallows game.", userTag)).queue();
-                break;
-            default:
-                break;
         }
     }
 
@@ -81,8 +92,11 @@ public class GallowsHandler implements Handler
 
     public boolean checkCommand (@NotNull String[] command)
     {
-        if (command.length >= 3 && command[2].length() == 1)
-            return Character.isLetter(command[2].charAt(0));
-        return false;
+        return command.length == 2 || command.length == 3;
+    }
+
+    private boolean isLetter (@NotNull String argument)
+    {
+        return argument.length() == 1 && Character.isLetter(argument.charAt(0));
     }
 }
