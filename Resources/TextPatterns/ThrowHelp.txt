@@ -1,0 +1,7 @@
+Here is help for dices.
+___|Rules|___
+You can throw a coin or a few dice.
+___|Commands|___
+-roll coin [throw a coin]
+-roll dice <dice number> <sides number> [roll a specified number of dice with a specified number of sides]
+-roll help [show this message]
