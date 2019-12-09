@@ -3,15 +3,10 @@ package tableBot.handlers;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import org.jetbrains.annotations.NotNull;
-import tableBot.Constants;
 import tableBot.InfoGetter;
 import tableBot.PathGetter;
 import tableBot.activityKeepers.GallowsActivityKeeper;
 import tableBot.games.gallows.GallowsModel;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public class GallowsHandler implements Handler
 {
