@@ -6,18 +6,19 @@ import tableBot.InfoGetter;
 import tableBot.PathGetter;
 import tableBot.activityKeepers.CardsActivityKeeper;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class CardGameHandler implements Handler
 {
     private CardsActivityKeeper activityKeeper;
-    public StringBuilder playerList;
+    public ArrayList<String> playerList;
 
     public CardGameHandler ()
     {
         activityKeeper = new CardsActivityKeeper();
-        playerList = new StringBuilder("testUser");
+        playerList = new ArrayList<>();
     }
 
     @Override
@@ -49,7 +50,7 @@ public class CardGameHandler implements Handler
 
     public void addUserReaction (String messageId, User user)
     {
-        playerList.append(user.getAsTag());
+        playerList.add(user.getAsTag());
     }
 
     @Override
