@@ -14,10 +14,12 @@ public class CardGameHandler implements Handler
 {
     private CardsActivityKeeper activityKeeper;
     public ArrayList<String> playerList;
+    private Timer timer;
 
     public CardGameHandler ()
     {
         activityKeeper = new CardsActivityKeeper();
+        timer = new Timer();
         playerList = new ArrayList<>();
     }
 
@@ -29,11 +31,12 @@ public class CardGameHandler implements Handler
         {
             case ("start"):
                 channel.sendMessage("Who's in card game?").queue(ch -> ch.addReaction("🃏").queue());
-                Timer timer = new Timer();
                 TimerTask task = new TimerTask() {
                     @Override
                     public void run ()
                     {
+                        System.out.println(System.identityHashCode(playerList));
+                        channel.sendMessage(String.valueOf(System.identityHashCode(playerList))).queue();
                         channel.sendMessage(playerList.toString()).queue();
                     }
                 };
@@ -51,6 +54,7 @@ public class CardGameHandler implements Handler
     public void addUserReaction (String messageId, User user)
     {
         playerList.add(user.getAsTag());
+        System.out.println(user.getAsTag() + "was added, identity hash for list is " + System.identityHashCode(playerList));
     }
 
     @Override
