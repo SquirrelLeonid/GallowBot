@@ -26,7 +26,7 @@ public class DiceRollHandler implements Handler
                 case ("dice"):
                     if (command.length != 4)
                         channel.sendMessage(String.format(Constants.WRONG_ARGUMENTS_NUMBER, "throw")).queue();
-                    else if (! isNumbers(command[2], command[3]))
+                    else if (! isPositiveNumbers(command[2], command[3]))
                         channel.sendMessage(String.format(Constants.WRONG_ARGUMENTS_FORMAT, "throw")).queue();
                     else
                     {
@@ -52,7 +52,7 @@ public class DiceRollHandler implements Handler
         return command.length == 2 || command.length == 4;
     }
 
-    private boolean isNumbers (String first, String second)
+    private boolean isPositiveNumbers (String first, String second)
     {
         String splice = first + second;
         try
