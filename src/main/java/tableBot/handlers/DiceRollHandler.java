@@ -11,7 +11,7 @@ public class DiceRollHandler implements Handler
 {
 
     @Override
-    public void handleCommand (TextChannel channel, String[] command, User user)
+    public void handleCommand (TextChannel channel, String[] command, User user, String messageId)
     {
         String userTag = user.getAsTag();
         if (! checkCommand(command))

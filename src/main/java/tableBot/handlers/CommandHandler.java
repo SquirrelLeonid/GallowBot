@@ -1,5 +1,6 @@
 package tableBot.handlers;
 
+import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
@@ -16,15 +17,15 @@ public class CommandHandler extends ListenerAdapter
 
     public void onGuildMessageReceived (GuildMessageReceivedEvent event)
     {
-        handleCommand(event.getChannel(), event.getMessage(), event.getAuthor());
+        handleCommand(event.getChannel(), event.getMessage(), event.getAuthor(), event.getMessageId());
     }
 
     public void onGuildMessageUpdate (GuildMessageUpdateEvent event)
     {
-        handleCommand(event.getChannel(), event.getMessage(), event.getAuthor());
+        handleCommand(event.getChannel(), event.getMessage(), event.getAuthor(), event.getMessageId());
     }
 
-    private void handleCommand (TextChannel channel, Message message, User user)
+    private void handleCommand (TextChannel channel, Message message, User user, String messageId)
     {
         String[] command = message.getContentRaw().split("\\s+");
         switch (command[0].toLowerCase())
@@ -34,13 +35,13 @@ public class CommandHandler extends ListenerAdapter
                 InfoGetter.showHelp(channel, path);
                 break;
             case (prefix + "gallows"):
-                HandlersKeeper.gallowsHandler.handleCommand(channel, command, user);
+                HandlersKeeper.gallowsHandler.handleCommand(channel, command, user, messageId);
                 break;
             case (prefix + "cards"):
-                HandlersKeeper.cardGameHandler.handleCommand(channel, command, user);
+                HandlersKeeper.cardsHandler.handleCommand(channel, command, user, messageId);
                 break;
             case (prefix + "throw"):
-                HandlersKeeper.diceRollHandler.handleCommand(channel, command, user);
+                HandlersKeeper.diceRollHandler.handleCommand(channel, command, user, messageId);
                 break;
             case (prefix + "activity"):
                 channel.sendMessage(InfoGetter.showActivities()).queue();

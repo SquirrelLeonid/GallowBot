@@ -7,7 +7,7 @@ import tableBot.Constants;
 import tableBot.InfoGetter;
 import tableBot.PathGetter;
 import tableBot.activityKeepers.GallowsActivityKeeper;
-import tableBot.games.gallows.GallowsModel;
+import tableBot.games.gallows.GameModel;
 
 public class GallowsHandler implements Handler
 {
@@ -18,7 +18,7 @@ public class GallowsHandler implements Handler
         activityKeeper = new GallowsActivityKeeper();
     }
 
-    public void handleCommand (TextChannel channel, String[] command, User user)
+    public void handleCommand (TextChannel channel, String[] command, User user, String messageId)
     {
         String userTag = user.getAsTag();
         if (! checkCommand(command))
@@ -37,7 +37,7 @@ public class GallowsHandler implements Handler
                     if (command.length != 3)
                         channel.sendMessage(String.format(Constants.WRONG_ARGUMENTS_NUMBER, "gallows")).queue();
                     else if (! activityKeeper.logContains(user))
-                        channel.sendMessage(String.format("%s, you don't have a created gallows game.", userTag)).queue();
+                        channel.sendMessage(String.format(Constants.PLAYER_ALREADY_IN_GAME, user.getAsTag(), "gallows")).queue();
                     else if (! isLetter(command[2]))
                         channel.sendMessage((String.format(Constants.WRONG_ARGUMENTS_FORMAT, "gallows"))).queue();
                     else
@@ -52,9 +52,9 @@ public class GallowsHandler implements Handler
                 }
                 case ("stop"):
                     if (activityKeeper.deleteActivity(user))
-                        channel.sendMessage(String.format("%s, your game was stopped.", userTag)).queue();
+                        channel.sendMessage(String.format(Constants.GAME_WAS_STOPPED, userTag)).queue();
                     else
-                        channel.sendMessage(String.format("%s, you don't have a created gallows game.", userTag)).queue();
+                        channel.sendMessage(String.format(Constants.PLAYER_ALREADY_IN_GAME, user.getAsTag(), "gallows")).queue();
                     break;
                 default:
                     channel.sendMessage(Constants.UNKNOWN_COMMAND).queue();
@@ -72,22 +72,22 @@ public class GallowsHandler implements Handler
             channel.sendFile(image, "start.jpg").queue();
         }
         else
-            channel.sendMessage(String.format("%s, you have unfinished game. To stop it write '-gallows stop'", user.getAsTag())).queue();
+            channel.sendMessage(String.format(Constants.PLAYER_ALREADY_IN_GAME, user.getAsTag(), "gallows")).queue();
     }
 
     private void tryGuess (TextChannel channel, User user, char letter)
     {
         if (activityKeeper.logContains(user))
         {
-            GallowsModel gallowsModel = activityKeeper.getActivity(user);
-            gallowsModel.makeMove(letter);
-            byte[] image = gallowsModel.gameField.getImage();
+            GameModel gameModel = activityKeeper.getActivity(user);
+            gameModel.makeMove(letter);
+            byte[] image = gameModel.gameField.getImage();
             channel.sendFile(image, "nextMove.jpg").queue();
-            if (gallowsModel.isGameEnded())
+            if (gameModel.isGameEnded())
                 activityKeeper.deleteActivity(user);
         }
         else
-            channel.sendMessage(String.format("%s, you don't have a created gallows game.", user.getAsTag())).queue();
+            channel.sendMessage(String.format(Constants.GAME_IS_NOT_CREATED, user.getAsTag(), "gallows")).queue();
     }
 
     public boolean checkCommand (@NotNull String[] command)

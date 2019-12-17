@@ -5,7 +5,7 @@ import net.dv8tion.jda.api.entities.User;
 
 public interface Handler
 {
-    void handleCommand (TextChannel channel, String[] command, User user);
+    void handleCommand (TextChannel channel, String[] command, User user, String messageId);
 
     boolean checkCommand (String[] command);
 }
