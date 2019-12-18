@@ -1,6 +1,6 @@
 package tableBot.games.gallows;
 
-public class GallowsModel
+public class GameModel
 {
     private int lives = 10;
     private boolean isEnded = false;
@@ -8,7 +8,7 @@ public class GallowsModel
     public GameField gameField;
     private WordStorage wordStorage;
 
-    public GallowsModel ()
+    public GameModel ()
     {
         wordStorage = new WordStorage();
         gameField = new GameField(wordStorage.getUsedLetters());
